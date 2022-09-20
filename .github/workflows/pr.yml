@@ -39,7 +39,8 @@ jobs:
           npm install 
           
       - name: Run All Node.js Tests
-        run: npm run test          
+        run: |
+          ./node_modules/.bin/mocha -r ts-node/register ./test/ec2tests.ts      
 
       - name: Select pulumi stack
         env:
