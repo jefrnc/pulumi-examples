@@ -36,15 +36,10 @@ jobs:
 
       - name: Install pre-requisites
         run: |
-          npm install @pulumi/aws @pulumi/pulumi
-          npm install @types/mime
-          npm install @pulumi/aws-native
-          npm install @pulumi/eks
-          npm install @pulumi/kubernetes
-          npm install @pulumi/policy
-          npm install @pulumi/random
-          npm install @pulumi/awsx
-          npm install @pulumi/tls
+          npm install 
+          
+      - name: Run All Node.js Tests
+        run: npm run test          
 
       - name: Select pulumi stack
         env:
