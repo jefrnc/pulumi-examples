@@ -8,7 +8,7 @@ import * as awsx from "@pulumi/awsx";
 export const secGroup = new aws.ec2.SecurityGroup("demo-secgrp", {    
     ingress: [
         { protocol: "tcp", fromPort: 80, toPort: 80, cidrBlocks: ["0.0.0.0/0"] },
-        { protocol: "tcp", fromPort: 22, toPort: 22, cidrBlocks: ["0.0.0.0/0"] },
+        //{ protocol: "tcp", fromPort: 22, toPort: 22, cidrBlocks: ["0.0.0.0/0"] },
     ],
 });
 
