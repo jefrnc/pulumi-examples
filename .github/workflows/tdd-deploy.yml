@@ -1,0 +1,93 @@
+# name: Deploy Pulumi Stack
+# on:
+#   push:
+#     branches:
+#       - 'main'
+
+# concurrency:
+#   group: ${{ github.ref }}
+#   cancel-in-progress: false
+
+# jobs:
+#   up:
+#     name: Deploy Pulumi Stack
+#     runs-on: ubuntu-latest
+#     env:
+#       pulumi-stack-name: demo
+#     steps:
+
+#       - name: Checkout
+#         uses: actions/checkout@v2
+#         with:
+#           fetch-depth: 0
+
+#       - uses: actions-ecosystem/action-get-latest-tag@v1
+#         id: get-latest-tag
+
+#       - uses: actions-ecosystem/action-bump-semver@v1
+#         id: bump-semver
+#         with:
+#           current_version: ${{ steps.get-latest-tag.outputs.tag }}
+#           level: minor
+
+#       - uses: actions-ecosystem/action-push-tag@v1
+#         with:
+#           tag: ${{ steps.bump-semver.outputs.new_version }}
+#           message: '${{ steps.bump-semver.outputs.new_version }}: PR #${{ github.event.pull_request.number }} ${{ github.event.pull_request.title }}'
+
+#       - name: Configure AWS Environment credentials
+#         uses: aws-actions/configure-aws-credentials@v1
+#         with:
+#           aws-access-key-id: ${{ secrets.AWS_DESA_ACCESS_KEY_ID }}
+#           aws-secret-access-key: ${{ secrets.AWS_DESA_SECRET_ACCESS_KEY }}
+#           aws-region: us-east-1
+
+#       - name: Setup Node
+#         uses: actions/setup-node@v1
+#         with:
+#           node-version: 16.x
+
+#       - name: Install pre-requisites
+#         run: |
+#           npm install @pulumi/aws @pulumi/pulumi
+#           npm install @types/mime
+#           npm install @pulumi/aws-native
+#           npm install @pulumi/eks
+#           npm install @pulumi/kubernetes
+#           npm install @pulumi/policy
+#           npm install @pulumi/random
+#           npm install @pulumi/awsx
+#           npm install @pulumi/tls
+
+#       - name: Select pulumi stack
+#         env:
+#           PULUMI_CONFIG_PASSPHRASE: ${{ secrets.PULUMI_CONFIG_PASSPHRASE }}
+#         run: |
+#           pulumi login s3://agrofy-devops-desa/demo/api
+#           pulumi stack select ${{ env.pulumi-stack-name }}
+
+#       - name: Refresh state
+#         uses: pulumi/actions@v3
+#         with:
+#           command: refresh
+#           stack-name: ${{ env.pulumi-stack-name }}
+#         env:
+#           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+#           PULUMI_CONFIG_PASSPHRASE: ${{ secrets.PULUMI_CONFIG_PASSPHRASE }}
+#           cloud-url: 's3://agrofy-devops-desa/demo/api/'
+#           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_DESA_ACCESS_KEY_ID }}
+#           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_DESA_SECRET_ACCESS_KEY }}
+#           AWS_REGION: 'us-east-1'
+
+#       - name: Deploy
+#         uses: pulumi/actions@v3
+#         with:
+#           command: up
+#           stack-name: ${{ env.pulumi-stack-name }}
+#         env:
+#           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+#           PULUMI_CONFIG_PASSPHRASE: ${{ secrets.PULUMI_CONFIG_PASSPHRASE }}
+#           cloud-url: 's3://agrofy-devops-desa/demo/api/'
+#           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_DESA_ACCESS_KEY_ID }}
+#           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_DESA_SECRET_ACCESS_KEY }}
+#           AWS_REGION: 'us-east-1'
