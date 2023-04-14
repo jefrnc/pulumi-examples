@@ -1,0 +1,36 @@
+/bin/
+/node_modules/
+# dependencies
+node_modules/
+/.pulumi/
+/.next/
+/out/
+
+# testing
+/coverage/
+
+# logs and backups
+logs
+*.log
+*.log.*
+*.swp
+*.swo
+
+# OS-generated files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Visual Studio Code generated files
+.vscode/
+*.vscode/
+.vscodeignore
+
+# macOS generated files
+*.DS_Store
+*.AppleDouble
+*.LSOverride
+Icon
+._*

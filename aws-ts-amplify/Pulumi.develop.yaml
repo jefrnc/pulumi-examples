@@ -1,0 +1,6 @@
+encryptionsalt: v1:NhvcaVyyx5Q=:v1:U88uZm2bvyRndegz:y9TkYkBoZoM7qVXW38nqx6aVzrs2Sw==
+config:
+  aws-ts-amplify:github-accessToken:
+    secure: v1:x3BiezvTwRRaYMOZ:Ghb8BRTholdWaGqZ/xY4O9F1OFfBXFhhx/S7MJjdcINszeiOvQPaSqXV0xsUZD/5TyBw1NskZ5Q=
+  aws:profile: devops
+  aws:region: us-east-1
