@@ -1,16 +1,39 @@
 [![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/jefrnc)
 
-# pulumi-examples
+# vault-py-create-approle
 
-This repository contains examples of using Pulumi for different cloud providers, such as AWS, GCP, Azure, etc.
+This is a Pulumi stack that demonstrates how to use the Vault AppRole to authenticate Jenkins with Vault.
 
-## Contributing 🖇️
+## Prerequisites
 
-Please read the [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests.
+- Pulumi CLI (https://www.pulumi.com/docs/get-started/install/)
+- HashiCorp Vault (https://www.vaultproject.io/docs/install)
+  
+## Configuration
 
-## License 📄
+```ssh
+export VAULT_ADDRESS=<VAULT_ADDRESS>
+export VAULT_TOKEN=<VAULT_TOKEN>
+```
 
-This project is licensed under the [MIT License](LICENSE.md).
+## Execution
+
+Deploy the Pulumi stack:
+
+```ssh
+pulumi up
+````
+
+## Retrieve the role ID and secret ID from Vault
+
+```ssh
+role_name="jenkins-dev-role"
+role_id=$(curl --header "X-Vault-Token: $VAULT_TOKEN" $VAULT_ADDR/v1/auth/approle/role/$role_name/role-id  | jq -r .data.role_id)
+secret_id=$(curl --header "X-Vault-Token: $VAULT_TOKEN" --request POST $VAULT_ADDR/v1/auth/approle/role/$role_name/secret-id | jq -r .data.secret_id)
+
+echo "role_id: $role_id"
+echo "secret_id: $secret_id"
+```
 
 ##  Buy me a coffee ☕
 

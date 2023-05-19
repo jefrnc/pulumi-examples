@@ -1,0 +1,6 @@
+name: vault-py-create-approle
+runtime:
+  name: python
+  options:
+    virtualenv: venv
+description: A simple app-role creation on Vault
