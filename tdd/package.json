@@ -9,7 +9,7 @@
     "dependencies": {
         "@pulumi/aws": "^5.0.0",
         "@pulumi/awsx": "^0.40.0",
-        "@pulumi/pulumi": "^3.0.0",
+        "@pulumi/pulumi": "^3.74.0",
         "ts-node": "^10.9.1"
     }
 }
